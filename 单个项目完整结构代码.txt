@@ -1,0 +1,1044 @@
+项目 'doubao-2api' 的结构树:
+📂 doubao-2api/
+    📄 .env
+    📄 .env.example
+    📄 Dockerfile
+    📄 docker-compose.yml
+    📄 main.py
+    📄 nginx.conf
+    📄 requirements.txt
+    📂 app/
+        📂 core/
+            📄 __init__.py
+            📄 config.py
+        📂 providers/
+            📄 __init__.py
+            📄 base_provider.py
+            📄 doubao_provider.py
+        📂 services/
+            📄 credential_manager.py
+            📄 playwright_manager.py
+            📄 session_manager.py
+        📂 utils/
+            📄 sse_utils.py
+================================================================================
+
+--- 文件路径: .env ---
+
+# [自动填充] doubao-2api 生产环境配置
+# 该文件由 Project Chimera: Synthesis Edition 自动生成。
+
+# --- 核心安全配置 ---
+# 用于保护您的 API 服务的访问密钥。为安全起见，建议修改为您自己的复杂密钥。
+API_MASTER_KEY=1
+
+# --- 部署配置 ---
+# Nginx 对外暴露的端口
+NGINX_PORT=8088
+
+# --- 豆包凭证 (支持多账号) ---
+# 已从您提供的抓包数据中自动提取。
+# 您可以添加 DOUBAO_COOKIE_2, DOUBAO_COOKIE_3 等来启用多账号轮询。
+# 关键修复：将所有 $ 替换为 $$ 以防止 docker-compose 错误地进行变量替换
+DOUBAO_COOKIE_1="_ga=GA1.1.106161677.1751986993; flow_user_country=CN; gd_random=eyJtYXRjaCI6dHJ1ZSwicGVyY2VudCI6MC40MDU4OTQxMTgwNjU5MTE5fQ==.uh5yd/EnUakcjRfWWa6OAVFeFHG5u3323TQ8c+A+MLk=; i18next=zh; flow_ssr_sidebar_expand=1; s_v_web_id=verify_mgyqvccs_blJSa2yy_7EW7_4Hyr_Ato6_bIPsXGNXitoz; passport_csrf_token=9eb3d0afec2be115cdb721e991cad1b3; passport_csrf_token_default=9eb3d0afec2be115cdb721e991cad1b3; passport_mfa_token=CjH5jul%2F30qQ%2BaY1jB%2Bnx8LpCcE48Hfop4c3MhxuEeBUFGs%2F8N4JhuZF4s7GeMeZN4w7GkoKPAAAAAAAAAAAAABPnWDhWnZOf2mKtl3lVJ%2FVMkKzWl5s%2BC8ctO%2BrbX8YwHlINTsmlfrNIskE71bYKnJQZRCEqf8NGPax0WwgAiIBA94Lbu8%3D; d_ticket=36e308ea7e3ffb14723f2139e51a83650034a; odin_tt=2eaa81b7b48fba60218c5f378553f4ce3c982fb25d8ee50efd4068f0427b0d95acf5f4570a1dc7c49aca53a61ed61ffb61c9e3f6c3eed5aa61fdb4ad6e00367f; n_mh=-FPXT10Y1ouY2RTXstCfFAbnlgz1v6FIer_PG9SzZ44; passport_auth_status=ba23b06ba9b3eb71cad40d03cc59fee6%2C; passport_auth_status_ss=ba23b06ba9b3eb71cad40d03cc59fee6%2C; sid_guard=3aa7bb87c6eeb0906760f16063aed75e%7C1760941125%7C2592000%7CWed%2C+19-Nov-2025+06%3A18%3A45+GMT; uid_tt=111f0e12e200a498139cb9e298827580; uid_tt_ss=111f0e12e200a498139cb9e298827580; sid_tt=3aa7bb87c6eeb0906760f16063aed75e; sessionid=3aa7bb87c6eeb0906760f16063aed75e; sessionid_ss=3aa7bb87c6eeb0906760f16063aed75e; session_tlb_tag=sttt%7C12%7COqe7h8busJBnYPFgY67XXv__________uXbtksAL_RkZw0L15F060kJ4FWWF3mfsmREcj6H4lXQ%3D; is_staff_user=false; sid_ucp_v1=1.0.0-KGI3YjM1OTk4NzUzOTM2MTY1Yjc4ZWM2M2Y0MDM3NmYwZTZhYzdjMzQKIAj5tLDq9a3wARDFqNfHBhjCsR4gDDDFqNfHBjgCQOwHGgJsZiIgM2FhN2JiODdjNmVlYjA5MDY3NjBmMTYwNjNhZWQ3NWU; ssid_ucp_v1=1.0.0-KGI3YjM1OTk4NzUzOTM2MTY1Yjc4ZWM2M2Y0MDM3NmYwZTZhYzdjMzQKIAj5tLDq9a3wARDFqNfHBhjCsR4gDDDFqNfHBjgCQOwHGgJsZiIgM2FhN2JiODdjNmVlYjA5MDY3NjBmMTYwNjNhZWQ3NWU; ttwid=1%7CYEzH0bhSHZjjqJLjeG5eHfpnB2RWiIe7DuumYAzUrDM%7C1760941158%7Cb7af9ac18f1a4364c95082df532abdbe68c1cb101f0af864be1eed84eff356a2; passport_fe_beating_status=true; _ga_G8EP5CG8VZ=GS2.1.s1760941083$$o54$$g1$$t1760941158$$j60$$l0$$h0"
+
+# --- 核心变更: 静态设备指纹 ---
+# 从浏览器抓包的有效请求中提取，以替换不稳定、易失效的动态嗅探。
+# 如果未来服务失效，大概率是这些值过期了，届时请重新抓包并更新。
+DOUBAO_DEVICE_ID=7524726744148264511
+DOUBAO_FP=verify_mgyqvccs_blJSa2yy_7EW7_4Hyr_Ato6_bIPsXGNXitoz
+DOUBAO_TEA_UUID=7524726753203160619
+DOUBAO_WEB_ID=7524726753203160619
+
+# --- 会话管理 (可选) ---
+# 对话历史在内存中的缓存时间（秒），默认1小时
+SESSION_CACHE_TTL=3600
+
+
+--- 文件路径: .env.example ---
+
+# /.env.example
+# ====================================================================
+# doubao-2api 配置文件模板
+# ====================================================================
+#
+# 请将此文件重命名为 ".env" 并填入您的凭证。
+#
+
+# --- 核心安全配置 (必须设置) ---
+# 用于保护您 API 服务的访问密钥。
+API_MASTER_KEY=sk-doubao-2api-default-key-please-change-me
+
+# --- 部署配置 (可选) ---
+# Nginx 对外暴露的端口
+NGINX_PORT=8088
+
+# --- 豆包凭证 (必须设置) ---
+# 请从浏览器开发者工具中获取完整的 Cookie 字符串。
+# 登录 https://www.doubao.com/chat/ 后，按 F12 打开开发者工具，
+# 切换到“网络(Network)”面板，随便发送一条消息，
+# 在请求列表中找到 `completion` 请求，右键 -> 复制 -> 复制为 cURL (bash)，
+# 然后从 cURL 命令中找到 `--cookie '...'` 部分，将其中的内容粘贴到下方。
+#
+# 支持多账号轮询，只需按格式添加 DOUBAO_COOKIE_2, DOUBAO_COOKIE_3, ...
+DOUBAO_COOKIE_1="在此处粘贴您的完整 Cookie 字符串"
+
+# --- 会话管理 (可选) ---
+# 对话历史在内存中的缓存时间（秒），默认1小时
+SESSION_CACHE_TTL=3600
+
+
+--- 文件路径: Dockerfile ---
+
+# /Dockerfile
+# ====================================================================
+# Dockerfile for doubao-2api (v1.4 - Patched for User Permissions)
+# ====================================================================
+
+# 使用一个稳定、广泛支持的 Debian 版本作为基础镜像
+FROM python:3.10-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+WORKDIR /app
+
+# 关键修正: 一次性、完整地安装所有系统依赖
+# 合并了 Playwright 官方建议的核心库和我们之前发现的字体库
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # Playwright 核心依赖
+    libnss3 libnspr4 libdbus-1-3 libatk1.0-0 libatk-bridge2.0-0 \
+    libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 \
+    libxrandr2 libgbm1 libasound2 libatspi2.0-0 \
+    # 官方错误日志中明确提示缺少的关键库
+    libpango-1.0-0 libcairo2 \
+    # 解决字体问题的包
+    fonts-unifont fonts-liberation \
+    # 清理 apt 缓存以减小镜像体积
+    && rm -rf /var/lib/apt/lists/*
+
+# 安装 Python 依赖
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# 复制应用代码
+COPY . .
+
+# 创建并切换到非 root 用户
+# 这一步很关键，我们先创建用户，然后以该用户身份安装浏览器
+RUN useradd --create-home appuser && \
+    chown -R appuser:appuser /app
+USER appuser
+
+# 核心修复：以 appuser 的身份安装 Chromium 浏览器
+# 这可以确保浏览器安装在 /home/appuser/.cache/ms-playwright/ 目录下，
+# 与应用运行时查找的路径一致，从而解决 "Executable doesn't exist" 错误。
+RUN playwright install chromium
+
+# 暴露端口并启动
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+
+
+--- 文件路径: docker-compose.yml ---
+
+# /docker-compose.yml
+services:
+  nginx:
+    image: nginx:latest
+    container_name: doubao-2api-nginx
+    restart: always
+    ports:
+      - "${NGINX_PORT:-8088}:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    networks:
+      - doubao-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: doubao-2api-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - doubao-net
+
+networks:
+  doubao-net:
+    driver: bridge
+
+
+--- 文件路径: main.py ---
+
+# /main.py
+import sys
+import json
+from contextlib import asynccontextmanager
+from typing import Optional
+
+from fastapi import FastAPI, Request, HTTPException, Depends, Header
+from fastapi.responses import JSONResponse, StreamingResponse
+from loguru import logger
+
+from app.core.config import settings
+from app.providers.doubao_provider import DoubaoProvider
+
+# --- 配置 Loguru ---
+logger.remove()
+logger.add(
+    sys.stdout,
+    level="INFO",
+    format="<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
+           "<level>{level: <8}</level> | "
+           "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    colorize=True
+)
+
+# --- 全局 Provider 实例 ---
+provider: Optional[DoubaoProvider] = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global provider
+    logger.info(f"应用启动中... {settings.APP_NAME} v{settings.APP_VERSION}")
+    provider = DoubaoProvider()
+    await provider.initialize()
+    logger.info("服务已进入 'JS-Signature-as-a-Service' 模式。")
+    logger.info(f"服务将在 http://localhost:{settings.NGINX_PORT} 上可用")
+    yield
+    await provider.close()
+    logger.info("应用关闭。")
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
+    description=settings.DESCRIPTION,
+    lifespan=lifespan
+)
+
+# --- 安全依赖 ---
+async def verify_api_key(authorization: Optional[str] = Header(None)):
+    if settings.API_MASTER_KEY and settings.API_MASTER_KEY != "1":
+        if not authorization or "bearer" not in authorization.lower():
+            raise HTTPException(status_code=401, detail="需要 Bearer Token 认证。")
+        token = authorization.split(" ")[-1]
+        if token != settings.API_MASTER_KEY:
+            raise HTTPException(status_code=403, detail="无效的 API Key。")
+
+# --- API 路由 ---
+@app.post("/v1/chat/completions", dependencies=[Depends(verify_api_key)])
+async def chat_completions(request: Request):
+    try:
+        request_data = await request.json()
+        logger.info(f"收到客户端请求 /v1/chat/completions:\n{json.dumps(request_data, indent=2, ensure_ascii=False)}")
+        return await provider.chat_completion(request_data)
+    except Exception as e:
+        logger.error(f"处理聊天请求时发生顶层错误: {e}", exc_info=True)
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"内部服务器错误: {str(e)}")
+
+@app.get("/v1/models", dependencies=[Depends(verify_api_key)], response_class=JSONResponse)
+async def list_models():
+    return await provider.get_models()
+
+@app.get("/", summary="根路径", include_in_schema=False)
+def root():
+    return {"message": f"欢迎来到 {settings.APP_NAME} v{settings.APP_VERSION}. 服务运行正常。"}
+
+
+--- 文件路径: nginx.conf ---
+
+# /nginx.conf
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream doubao_backend {
+        # 由于应用内部已实现有状态会话管理，此处无需 ip_hash
+        server app:8000;
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            proxy_pass http://doubao_backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            
+            # 流式传输优化
+            proxy_buffering off;
+            proxy_cache off;
+            proxy_set_header Connection '';
+            proxy_http_version 1.1;
+            chunked_transfer_encoding off;
+        }
+    }
+}
+
+
+--- 文件路径: requirements.txt ---
+
+# /requirements.txt
+fastapi
+uvicorn
+pydantic-settings
+python-dotenv
+cloudscraper
+cachetools
+httpx
+loguru
+playwright==1.44.0
+playwright-stealth==1.0.6
+
+
+--- 文件路径: app\core\__init__.py ---
+
+
+
+--- 文件路径: app\core\config.py ---
+
+# /app/core/config.py
+import os
+import uuid
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import model_validator
+from typing import Optional, List, Dict
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding='utf-8',
+        extra="ignore"
+    )
+
+    APP_NAME: str = "doubao-2api"
+    APP_VERSION: str = "1.0.0"
+    DESCRIPTION: str = "一个将 doubao.com 转换为兼容 OpenAI 格式 API 的高性能代理，内置 a_bogus 签名解决方案。"
+
+    # --- 核心安全与部署配置 ---
+    API_MASTER_KEY: Optional[str] = "1"
+    NGINX_PORT: int = 8088
+    
+    # --- Doubao 凭证 ---
+    DOUBAO_COOKIES: List[str] = []
+
+    # --- 核心变更: 静态设备指纹配置 ---
+    # 从您提供的有效请求中提取的静态设备指纹，这比动态嗅探稳定得多
+    # 如果未来失效，只需从浏览器抓取新的请求并更新此处的值
+    DOUBAO_DEVICE_ID: Optional[str] = None
+    DOUBAO_FP: Optional[str] = None
+    DOUBAO_TEA_UUID: Optional[str] = None
+    DOUBAO_WEB_ID: Optional[str] = None
+
+    # --- 上游 API 配置 ---
+    API_REQUEST_TIMEOUT: int = 180
+    
+    # --- 会话管理 ---
+    SESSION_CACHE_TTL: int = 3600
+
+    # --- 模型配置 ---
+    DEFAULT_MODEL: str = "doubao-pro-chat"
+    MODEL_MAPPING: Dict[str, str] = {
+        "doubao-pro-chat": "7338286299411103781", # 默认模型 Bot ID
+    }
+
+    @model_validator(mode='after')
+    def validate_settings(self) -> 'Settings':
+        # 从环境变量 DOUBAO_COOKIE_1, DOUBAO_COOKIE_2, ... 加载 cookies
+        i = 1
+        while True:
+            cookie_str = os.getenv(f"DOUBAO_COOKIE_{i}")
+            if cookie_str:
+                self.DOUBAO_COOKIES.append(cookie_str)
+                i += 1
+            else:
+                break
+        
+        if not self.DOUBAO_COOKIES:
+            raise ValueError("必须在 .env 文件中至少配置一个有效的 DOUBAO_COOKIE_1")
+
+        # --- 核心变更: 验证设备指纹是否已配置 ---
+        if not all([self.DOUBAO_DEVICE_ID, self.DOUBAO_FP, self.DOUBAO_TEA_UUID, self.DOUBAO_WEB_ID]):
+            raise ValueError("必须在 .env 文件中配置完整的设备指纹参数 (DOUBAO_DEVICE_ID, DOUBAO_FP, DOUBAO_TEA_UUID, DOUBAO_WEB_ID)")
+        
+        return self
+
+settings = Settings()
+
+
+--- 文件路径: app\providers\__init__.py ---
+
+
+
+--- 文件路径: app\providers\base_provider.py ---
+
+from abc import ABC, abstractmethod
+from typing import Dict, Any
+from fastapi.responses import StreamingResponse, JSONResponse
+
+class BaseProvider(ABC):
+    @abstractmethod
+    async def chat_completion(
+        self,
+        request_data: Dict[str, Any]
+    ) -> StreamingResponse:
+        pass
+
+    @abstractmethod
+    async def get_models(self) -> JSONResponse:
+        pass
+
+
+--- 文件路径: app\providers\doubao_provider.py ---
+
+# /app/providers/doubao_provider.py
+import json
+import re
+import time
+import uuid
+from typing import Dict, Any, AsyncGenerator, List
+
+import httpx
+from fastapi import HTTPException
+from fastapi.responses import StreamingResponse, JSONResponse
+from loguru import logger
+
+from app.core.config import settings
+from app.providers.base_provider import BaseProvider
+from app.services.credential_manager import CredentialManager
+from app.services.playwright_manager import PlaywrightManager
+from app.services.session_manager import SessionManager
+from app.utils.sse_utils import create_sse_data, create_chat_completion_chunk, DONE_CHUNK
+
+
+class DoubaoProvider(BaseProvider):
+    def __init__(self):
+        self.credential_manager = CredentialManager(settings.DOUBAO_COOKIES)
+        self.session_manager = SessionManager()
+        self.playwright_manager = PlaywrightManager()
+        self.client: httpx.AsyncClient = None
+
+    async def initialize(self):
+        self.client = httpx.AsyncClient(timeout=settings.API_REQUEST_TIMEOUT)
+        await self.playwright_manager.initialize(self.credential_manager.credentials)
+
+    async def close(self):
+        if self.client:
+            await self.client.aclose()
+        await self.playwright_manager.close()
+
+    def _get_dynamic_cookie(self, base_cookie: str) -> str:
+        """
+        用 Playwright 捕获的最新 msToken 更新基础 Cookie 字符串。
+        这是确保签名和请求头一致性的关键。
+        """
+        latest_ms_token = self.playwright_manager.ms_token
+        if not latest_ms_token:
+            logger.warning("动态 Cookie 更新失败：Playwright 管理器中没有可用的 msToken。将使用原始 Cookie。")
+            return base_cookie
+
+        if 'msToken=' in base_cookie:
+            new_cookie = re.sub(r'msToken=[^;]+', f'msToken={latest_ms_token}', base_cookie)
+            logger.info("成功将动态 msToken 更新到 Cookie 头中。")
+        else:
+            new_cookie = f"{base_cookie.strip(';')}; msToken={latest_ms_token}"
+            logger.info("原始 Cookie 中未找到 msToken，已追加最新的 msToken。")
+        
+        return new_cookie
+
+    async def chat_completion(self, request_data: Dict[str, Any]):
+        """
+        根据请求中的 'stream' 参数，分发到流式或非流式处理函数。
+        """
+        is_stream = request_data.get("stream", True)
+
+        if is_stream:
+            return StreamingResponse(self._stream_generator(request_data), media_type="text/event-stream")
+        else:
+            return await self._non_stream_completion(request_data)
+
+    async def _non_stream_completion(self, request_data: Dict[str, Any]) -> JSONResponse:
+        """
+        处理非流式聊天补全请求。
+        """
+        session_id = request_data.get("user", f"session-{uuid.uuid4().hex}")
+        messages = request_data.get("messages", [])
+        user_model = request_data.get("model", settings.DEFAULT_MODEL)
+
+        bot_id = settings.MODEL_MAPPING.get(user_model)
+        if not bot_id:
+            raise HTTPException(status_code=400, detail=f"不支持的模型: {user_model}")
+
+        session_data = self.session_manager.get_session(session_id) or {}
+        conversation_id = session_data.get("conversation_id", "0")
+        is_new_conversation = conversation_id == "0"
+
+        request_id = f"chatcmpl-{uuid.uuid4()}"
+        new_conversation_id = None
+        full_content = []
+        streamed_any_data = False
+
+        try:
+            base_cookie = self.credential_manager.get_credential()
+            final_cookie = self._get_dynamic_cookie(base_cookie)
+            base_url = "https://www.doubao.com/samantha/chat/completion"
+            base_params = {
+                "aid": "497858", "device_platform": "web", "language": "zh",
+                "pc_version": "2.41.0", "pkg_type": "release_version", "real_aid": "497858",
+                "region": "CN", "samantha_web": "1", "sys_region": "CN",
+                "use-olympus-account": "1", "version_code": "20800",
+            }
+            headers = self._prepare_headers(final_cookie)
+            payload = self._prepare_payload(messages, bot_id, conversation_id)
+
+            log_headers = headers.copy()
+            log_headers["Cookie"] = "[REDACTED FOR SECURITY]"
+            logger.info("--- 准备向上游发送的完整请求包 (非流式) ---")
+            logger.info(f"请求方法: POST")
+            logger.info(f"基础URL: {base_url}")
+            logger.info(f"请求头 (Headers):\n{json.dumps(log_headers, indent=2)}")
+            logger.info(f"请求载荷 (Payload):\n{json.dumps(payload, indent=2, ensure_ascii=False)}")
+            logger.info("------------------------------------")
+
+            signed_url = await self.playwright_manager.get_signed_url(base_url, final_cookie, base_params)
+            if not signed_url:
+                raise Exception("无法获取 a_bogus 签名, Playwright 服务可能异常。")
+
+            logger.info(f"签名成功，最终请求 URL: {signed_url}")
+
+            async with self.client.stream("POST", signed_url, headers=headers, json=payload) as response:
+                new_ms_token = response.headers.get("x-ms-token")
+                if new_ms_token:
+                    self.playwright_manager.update_ms_token(new_ms_token)
+                    logger.success(f"从响应头中捕获并更新了 msToken: {new_ms_token}")
+
+                if response.status_code != 200:
+                    error_content = await response.aread()
+                    logger.error(f"上游服务器返回错误状态码: {response.status_code}。")
+                    logger.error(f"上游服务器响应内容: {error_content.decode(errors='ignore')}")
+                    response.raise_for_status()
+
+                logger.success(f"成功连接到上游服务器, 状态码: {response.status_code}. 开始接收响应...")
+
+                async for line in response.aiter_lines():
+                    # [诊断日志] 打印从上游收到的每一行原始数据
+                    logger.info(f"上游原始响应行: {line}")
+                    streamed_any_data = True
+                    if not line.startswith("data:"):
+                        continue
+                    content_str = line[len("data:"):].strip()
+                    if not content_str:
+                        continue
+
+                    try:
+                        data = json.loads(content_str)
+                        if data.get("event_type") == 2002 and not new_conversation_id:
+                            event_data = json.loads(data.get("event_data", "{}"))
+                            new_conversation_id = event_data.get("conversation_id")
+                            logger.info(f"捕获到新会话 ID: {new_conversation_id}")
+
+                        if data.get("event_type") == 2001:
+                            event_data = json.loads(data.get("event_data", "{}"))
+                            message_data = event_data.get("message", {})
+                            content_json = json.loads(message_data.get("content", "{}"))
+                            delta_content = content_json.get("text", "")
+                            if delta_content:
+                                full_content.append(delta_content)
+                    except (json.JSONDecodeError, KeyError) as e:
+                        logger.warning(f"解析 SSE 数据块时跳过: {e}, 内容: {content_str}")
+                        continue
+
+            if not streamed_any_data:
+                logger.error("上游服务器返回了 200 OK，但没有发送任何数据流。这通常是由于反爬虫策略触发。")
+                raise Exception("服务器连接成功但未返回数据流，请求可能被上游服务拦截。请检查Cookie是否过期或IP是否被限制。")
+
+            if is_new_conversation and new_conversation_id:
+                self.session_manager.update_session(session_id, {"conversation_id": new_conversation_id})
+                logger.info(f"为用户 '{session_id}' 保存了新的会话 ID: {new_conversation_id}")
+
+            final_text = "".join(full_content)
+
+            # 按照用户要求，将完整的响应内容打印到终端
+            print("\n--- [非流式] 完整响应内容 ---")
+            print(final_text)
+            print("---------------------------------\n")
+
+            response_data = {
+                "id": request_id,
+                "object": "chat.completion",
+                "created": int(time.time()),
+                "model": user_model,
+                "choices": [{
+                    "index": 0,
+                    "message": {"role": "assistant", "content": final_text},
+                    "finish_reason": "stop"
+                }],
+                "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+            }
+            return JSONResponse(content=response_data)
+
+        except Exception as e:
+            logger.error(f"处理非流式请求时发生严重错误: {e}", exc_info=True)
+            return JSONResponse(
+                status_code=500,
+                content={"error": {"message": f"内部服务器错误: {str(e)}", "type": "server_error", "code": None}}
+            )
+
+    async def _stream_generator(self, request_data: Dict[str, Any]) -> AsyncGenerator[bytes, None]:
+        """
+        处理流式聊天补全请求。
+        """
+        session_id = request_data.get("user", f"session-{uuid.uuid4().hex}")
+        messages = request_data.get("messages", [])
+        user_model = request_data.get("model", settings.DEFAULT_MODEL)
+
+        bot_id = settings.MODEL_MAPPING.get(user_model)
+        if not bot_id:
+            # This should be handled before calling the generator, but as a safeguard:
+            error_chunk = create_chat_completion_chunk(f"chatcmpl-{uuid.uuid4()}", user_model, f"不支持的模型: {user_model}", "stop")
+            yield create_sse_data(error_chunk)
+            yield DONE_CHUNK
+            return
+
+        session_data = self.session_manager.get_session(session_id) or {}
+        conversation_id = session_data.get("conversation_id", "0")
+        is_new_conversation = conversation_id == "0"
+
+        request_id = f"chatcmpl-{uuid.uuid4()}"
+        new_conversation_id = None
+        streamed_any_data = False
+
+        try:
+            base_cookie = self.credential_manager.get_credential()
+            final_cookie = self._get_dynamic_cookie(base_cookie)
+            base_url = "https://www.doubao.com/samantha/chat/completion"
+            base_params = {
+                "aid": "497858", "device_platform": "web", "language": "zh",
+                "pc_version": "2.41.0", "pkg_type": "release_version", "real_aid": "497858",
+                "region": "CN", "samantha_web": "1", "sys_region": "CN",
+                "use-olympus-account": "1", "version_code": "20800",
+            }
+            headers = self._prepare_headers(final_cookie)
+            payload = self._prepare_payload(messages, bot_id, conversation_id)
+
+            log_headers = headers.copy()
+            log_headers["Cookie"] = "[REDACTED FOR SECURITY]"
+            logger.info("--- 准备向上游发送的完整请求包 (流式) ---")
+            logger.info(f"请求方法: POST")
+            logger.info(f"基础URL: {base_url}")
+            logger.info(f"请求头 (Headers):\n{json.dumps(log_headers, indent=2)}")
+            logger.info(f"请求载荷 (Payload):\n{json.dumps(payload, indent=2, ensure_ascii=False)}")
+            logger.info("------------------------------------")
+
+            signed_url = await self.playwright_manager.get_signed_url(base_url, final_cookie, base_params)
+            if not signed_url:
+                raise Exception("无法获取 a_bogus 签名, Playwright 服务可能异常。")
+
+            logger.info(f"签名成功，最终请求 URL: {signed_url}")
+
+            # 按照用户要求，在流式输出前打印一个标识
+            print("\n--- [流式] 响应内容 ---")
+
+            async with self.client.stream("POST", signed_url, headers=headers, json=payload) as response:
+                new_ms_token = response.headers.get("x-ms-token")
+                if new_ms_token:
+                    self.playwright_manager.update_ms_token(new_ms_token)
+                    logger.success(f"从响应头中捕获并更新了 msToken: {new_ms_token}")
+
+                if response.status_code != 200:
+                    error_content = await response.aread()
+                    logger.error(f"上游服务器返回错误状态码: {response.status_code}。")
+                    logger.error(f"上游服务器响应内容: {error_content.decode(errors='ignore')}")
+                    response.raise_for_status()
+
+                logger.success(f"成功连接到上游服务器, 状态码: {response.status_code}. 开始接收响应...")
+
+                async for line in response.aiter_lines():
+                    # [诊断日志] 打印从上游收到的每一行原始数据
+                    logger.info(f"上游原始响应行: {line}")
+                    streamed_any_data = True
+                    if not line.startswith("data:"):
+                        continue
+                    content_str = line[len("data:"):].strip()
+                    if not content_str:
+                        continue
+
+                    try:
+                        data = json.loads(content_str)
+                        if data.get("event_type") == 2002 and not new_conversation_id:
+                            event_data = json.loads(data.get("event_data", "{}"))
+                            new_conversation_id = event_data.get("conversation_id")
+                            logger.info(f"捕获到新会话 ID: {new_conversation_id}")
+
+                        if data.get("event_type") == 2001:
+                            event_data = json.loads(data.get("event_data", "{}"))
+                            message_data = event_data.get("message", {})
+                            content_json = json.loads(message_data.get("content", "{}"))
+                            delta_content = content_json.get("text", "")
+                            if delta_content:
+                                # 按照用户要求，将流式数据块直接打印到终端
+                                print(delta_content, end="", flush=True)
+                                chunk = create_chat_completion_chunk(request_id, user_model, delta_content)
+                                yield create_sse_data(chunk)
+                    except (json.JSONDecodeError, KeyError) as e:
+                        logger.warning(f"解析 SSE 数据块时跳过: {e}, 内容: {content_str}")
+                        continue
+            
+            # 在流式输出结束后打印换行符和结束标识
+            if streamed_any_data:
+                print("\n--------------------------\n")
+
+            if not streamed_any_data:
+                logger.error("上游服务器返回了 200 OK，但没有发送任何数据流。这通常是由于反爬虫策略触发。")
+                error_message = "服务器连接成功但未返回数据流，请求可能被上游服务拦截。请检查Cookie是否过期或IP是否被限制。"
+                error_chunk = create_chat_completion_chunk(request_id, user_model, error_message, "stop")
+                yield create_sse_data(error_chunk)
+                yield DONE_CHUNK
+                return
+
+            if is_new_conversation and new_conversation_id:
+                self.session_manager.update_session(session_id, {"conversation_id": new_conversation_id})
+                logger.info(f"为用户 '{session_id}' 保存了新的会话 ID: {new_conversation_id}")
+
+            final_chunk = create_chat_completion_chunk(request_id, user_model, "", "stop")
+            yield create_sse_data(final_chunk)
+            yield DONE_CHUNK
+
+        except Exception as e:
+            logger.error(f"处理流时发生严重错误: {e}", exc_info=True)
+            # 在流式输出结束后打印换行符和结束标识
+            print("\n--- [流式] 发生错误 ---\n")
+            error_chunk = create_chat_completion_chunk(request_id, user_model, f"内部服务器错误: {str(e)}", "stop")
+            yield create_sse_data(error_chunk)
+            yield DONE_CHUNK
+
+    def _prepare_headers(self, cookie: str) -> Dict[str, str]:
+        return {
+            "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+            "Content-Type": "application/json", "Cookie": cookie,
+            "Origin": "https://www.doubao.com", "Referer": "https://www.doubao.com/chat/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "agw-js-conv": "str, str",
+            "sec-ch-ua": '"Google Chrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+            "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": '"Windows"',
+            "sec-fetch-dest": "empty", "sec-fetch-mode": "cors", "sec-fetch-site": "same-origin",
+        }
+
+    def _prepare_payload(self, messages: List[Dict[str, Any]], bot_id: str, conversation_id: str) -> Dict[str, Any]:
+        last_user_message = next((m for m in reversed(messages) if m.get("role") == "user"), None)
+        if not last_user_message:
+            raise HTTPException(status_code=400, detail="未找到用户消息。")
+
+        payload = {
+            "messages": [{"content": json.dumps({"text": last_user_message["content"]}), "content_type": 2001, "attachments": [], "references": []}],
+            "completion_option": {
+                "is_regen": False, "with_suggest": True, "need_create_conversation": conversation_id == "0",
+                "launch_stage": 1, "is_replace": False, "is_delete": False, "message_from": 0,
+                "action_bar_skill_id": 0, "use_deep_think": False, "use_auto_cot": True,
+                "resend_for_regen": False, "enable_commerce_credit": False, "event_id": "0"
+            },
+            "evaluate_option": {"web_ab_params": ""},
+            "conversation_id": conversation_id,
+            "local_conversation_id": f"local_{uuid.uuid4().hex}",
+            "local_message_id": str(uuid.uuid4())
+        }
+
+        if conversation_id != "0":
+            payload["bot_id"] = bot_id
+        
+        return payload
+
+    async def get_models(self) -> JSONResponse:
+        return JSONResponse(content={
+            "object": "list",
+            "data": [{"id": name, "object": "model", "created": int(time.time()), "owned_by": "lzA6"} for name in settings.MODEL_MAPPING.keys()]
+        })
+
+
+--- 文件路径: app\services\credential_manager.py ---
+
+# /app/services/credential_manager.py
+import threading
+from typing import List
+from loguru import logger
+
+class CredentialManager:
+    def __init__(self, credentials: List[str]):
+        if not credentials:
+            raise ValueError("凭证列表不能为空。")
+        self.credentials = credentials
+        self.index = 0
+        self.lock = threading.Lock()
+        logger.info(f"凭证管理器已初始化，共加载 {len(self.credentials)} 个凭证。")
+
+    def get_credential(self) -> str:
+        with self.lock:
+            credential = self.credentials[self.index]
+            self.index = (self.index + 1) % len(self.credentials)
+            logger.debug(f"轮询到凭证索引: {self.index}")
+            return credential
+
+
+--- 文件路径: app\services\playwright_manager.py ---
+
+# /app/services/playwright_manager.py
+import asyncio
+import json
+import uuid
+from typing import Optional, Dict, List
+from urllib.parse import urlencode, urlparse
+
+from playwright_stealth import stealth_async
+from playwright.async_api import async_playwright, Browser, Page, ConsoleMessage, TimeoutError, Route, Request
+from loguru import logger
+
+from app.core.config import settings # 导入 settings
+
+def handle_console_message(msg: ConsoleMessage):
+    """将浏览器控制台日志转发到 Loguru，并过滤已知噪音"""
+    log_level = msg.type.upper()
+    text = msg.text
+    # 过滤掉常见的、无害的浏览器噪音
+    if "Failed to load resource" in text or "net::ERR_FAILED" in text:
+        return
+    if "WebSocket connection" in text:
+        return
+    if "Content Security Policy" in text:
+        return
+    if "Scripts may close only the windows that were opened by them" in text:
+        return
+    if "Ignoring too frequent calls to print()" in text:
+        return
+
+    log_message = f"[Browser Console] {text}"
+    if log_level == "ERROR":
+        logger.error(log_message)
+    elif log_level == "WARNING":
+        logger.warning(log_message)
+    else:
+        pass
+
+class PlaywrightManager:
+    _instance = None
+    _lock = asyncio.Lock()
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(PlaywrightManager, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
+    async def initialize(self, cookies: List[str]):
+        if self._initialized:
+            return
+        async with self._lock:
+            if self._initialized:
+                return
+            logger.info("正在初始化 Playwright 管理器 (签名服务模式)...")
+            self.playwright = await async_playwright().start()
+            self.browser = await self.playwright.chromium.launch(
+                headless=True,
+                args=["--no-sandbox", "--disable-setuid-sandbox"]
+            )
+            self.page = await self.browser.new_page()
+
+            await stealth_async(self.page)
+            self.page.on("console", handle_console_message)
+            await self.page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+
+            self.static_device_fingerprint = {
+                'device_id': settings.DOUBAO_DEVICE_ID,
+                'fp': settings.DOUBAO_FP,
+                'web_id': settings.DOUBAO_WEB_ID,
+                'tea_uuid': settings.DOUBAO_TEA_UUID
+            }
+            logger.success(f"已从配置中加载静态设备指纹: {self.static_device_fingerprint}")
+            
+            self.ms_token = None
+
+            async def _handle_response(response):
+                try:
+                    if 'x-ms-token' in response.headers:
+                        token = response.headers['x-ms-token']
+                        if token != self.ms_token:
+                            self.ms_token = token
+                            logger.success(f"通过响应头捕获到新的 msToken: {self.ms_token}")
+                except Exception as e:
+                    logger.warning(f"处理响应时出错: {e} (URL: {response.url})")
+
+            self.page.on("response", _handle_response)
+
+            if not cookies:
+                raise ValueError("Playwright 初始化需要至少一个有效的 Cookie。")
+            
+            logger.info("正在为初始页面加载设置 Cookie...")
+            initial_cookie_str = cookies[0]
+            try:
+                cookie_list = [
+                    {"name": c.split('=')[0].strip(), "value": c.split('=', 1)[1].strip(), "domain": ".doubao.com", "path": "/"}
+                    for c in initial_cookie_str.split(';') if '=' in c
+                ]
+                await self.page.context.add_cookies(cookie_list)
+                logger.success("初始 Cookie 设置完成。")
+            except IndexError as e:
+                logger.error(f"解析 Cookie 时出错: '{initial_cookie_str}'. 请确保 Cookie 格式正确。错误: {e}")
+                raise ValueError("Cookie 格式无效，无法进行初始化。") from e
+
+            try:
+                logger.info("正在导航到豆包官网以加载签名脚本 (超时时间: 60秒)...")
+                await self.page.goto(
+                    "https://www.doubao.com/chat/",
+                    wait_until="load",
+                    timeout=60000
+                )
+                logger.info("页面导航完成 (load 事件触发)。")
+            except TimeoutError as e:
+                logger.error(f"导航到豆包官网超时: {e}")
+                raise RuntimeError("无法访问豆包官网，初始化失败。") from e
+
+            try:
+                logger.info("正在等待关键签名函数 (window.byted_acrawler.frontierSign) 加载 (超时时间: 30秒)...")
+                await self.page.wait_for_function(
+                    "() => typeof window.byted_acrawler?.frontierSign === 'function'",
+                    timeout=30000
+                )
+                logger.success("关键签名函数已在启动时成功加载！")
+            except TimeoutError:
+                logger.error("等待签名函数超时！这很可能是因为 Cookie 无效或已过期。")
+                raise RuntimeError("无法加载豆包签名函数，请检查并更新 Cookie。")
+            
+            if not self.ms_token:
+                logger.info("等待 msToken 出现，最长等待 10 秒...")
+                await asyncio.sleep(10)
+                if not self.ms_token:
+                    logger.warning("在额外等待后，依然未能捕获到初始 msToken。后续请求将依赖响应头更新。")
+
+            logger.success("Playwright 管理器 (签名服务模式) 初始化完成。")
+            self._initialized = True
+
+    def update_ms_token(self, token: str):
+        self.ms_token = token
+
+    async def get_signed_url(self, base_url: str, cookie: str, base_params: Dict[str, str]) -> Optional[str]:
+        async with self._lock:
+            if not self._initialized:
+                raise RuntimeError("PlaywrightManager 未初始化。")
+            
+            try:
+                logger.info("正在使用 Playwright 生成 a_bogus 签名...")
+                
+                final_params = base_params.copy()
+                final_params.update(self.static_device_fingerprint)
+                
+                final_params['web_tab_id'] = str(uuid.uuid4())
+                if self.ms_token:
+                    final_params['msToken'] = self.ms_token
+                else:
+                    logger.error("msToken 未被初始化，无法构建有效请求！")
+                    return None
+
+                # --- 核心修复: 对参数进行字母排序，以生成正确的签名 ---
+                sorted_params = dict(sorted(final_params.items()))
+                final_query_string = urlencode(sorted_params)
+                url_with_params = f"{base_url}?{final_query_string}"
+
+                logger.info(f"正在使用静态指纹和排序后的参数调用 window.byted_acrawler.frontierSign: \"{final_query_string}\"")
+                signature_obj = await self.page.evaluate(f'window.byted_acrawler.frontierSign("{final_query_string}")')
+                
+                if isinstance(signature_obj, dict) and ('a_bogus' in signature_obj or 'X-Bogus' in signature_obj):
+                    bogus_value = signature_obj.get('a_bogus') or signature_obj.get('X-Bogus')
+                    logger.success(f"成功解析签名对象，获取到 a_bogus: {bogus_value}")
+                    
+                    signed_url = f"{url_with_params}&a_bogus={bogus_value}"
+                    return signed_url
+                else:
+                    logger.error(f"调用签名函数失败，返回值不是预期的字典格式或缺少 a_bogus: {signature_obj}")
+                    return None
+
+            except Exception as e:
+                logger.error(f"Playwright 签名时发生严重错误: {e}", exc_info=True)
+                return None
+
+    async def close(self):
+        if self._initialized:
+            async with self._lock:
+                if self.browser:
+                    await self.browser.close()
+                if self.playwright:
+                    await self.playwright.stop()
+                self._initialized = False
+                logger.info("Playwright 管理器已关闭。")
+
+
+--- 文件路径: app\services\session_manager.py ---
+
+# /app/services/session_manager.py
+import threading
+from cachetools import TTLCache
+from typing import Dict, Any, Optional
+from app.core.config import settings
+from loguru import logger
+
+class SessionManager:
+    def __init__(self):
+        self.cache = TTLCache(maxsize=1024, ttl=settings.SESSION_CACHE_TTL)
+        self.lock = threading.Lock()
+        logger.info(f"会话管理器已初始化，缓存 TTL: {settings.SESSION_CACHE_TTL} 秒。")
+
+    def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
+        with self.lock:
+            return self.cache.get(session_id)
+
+    def update_session(self, session_id: str, data: Dict[str, Any]):
+        with self.lock:
+            self.cache[session_id] = data
+            logger.debug(f"会话 {session_id} 已更新。")
+
+
+--- 文件路径: app\utils\sse_utils.py ---
+
+# /app/utils/sse_utils.py
+import json
+import time
+from typing import Dict, Any, Optional
+
+DONE_CHUNK = b"data: [DONE]\n\n"
+
+def create_sse_data(data: Dict[str, Any]) -> bytes:
+    return f"data: {json.dumps(data)}\n\n".encode('utf-8')
+
+def create_chat_completion_chunk(
+    request_id: str,
+    model: str,
+    content: str,
+    finish_reason: Optional[str] = None
+) -> Dict[str, Any]:
+    return {
+        "id": request_id,
+        "object": "chat.completion.chunk",
+        "created": int(time.time()),
+        "model": model,
+        "choices": [
+            {
+                "index": 0,
+                "delta": {"content": content},
+                "finish_reason": finish_reason
+            }
+        ]
+    }
+
+
+
