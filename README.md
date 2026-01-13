@@ -1,5 +1,21 @@
 # doubao-2api - 豆包转 OpenAI API ✨
 
+```
+docker run -d \
+--name doubao-2api \
+-p 8088:8088 \
+-e NGINX_PORT=8088 \
+-e API_MASTER_KEY="master_key" \
+-e DOUBAO_COOKIE_1="your_cookie_here" \
+-e DOUBAO_DEVICE_ID="device_id" \
+-e DOUBAO_FP="fp_value" \
+-e DOUBAO_TEA_UUID="tea_uuid" \
+-e DOUBAO_WEB_ID="web_id" \
+bailangvvking/doubao-2api
+```
+
+
+
 <div align="center">
 
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)

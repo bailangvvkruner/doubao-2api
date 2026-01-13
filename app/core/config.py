@@ -56,11 +56,27 @@ class Settings(BaseSettings):
                 break
         
         if not self.DOUBAO_COOKIES:
-            raise ValueError("必须在 .env 文件中至少配置一个有效的 DOUBAO_COOKIE_1")
+            raise ValueError("必须至少配置一个有效的 DOUBAO_COOKIE 环境变量 (例如 DOUBAO_COOKIE_1)")
 
-        # --- 核心变更: 验证设备指纹是否已配置 ---
+        # --- 核心变更: 优先从环境变量读取设备指纹 ---
+        # 如果环境变量中有值，则使用环境变量的值覆盖 .env 文件中的值
+        device_id_from_env = os.getenv("DOUBAO_DEVICE_ID")
+        fp_from_env = os.getenv("DOUBAO_FP")
+        tea_uuid_from_env = os.getenv("DOUBAO_TEA_UUID")
+        web_id_from_env = os.getenv("DOUBAO_WEB_ID")
+        
+        if device_id_from_env:
+            self.DOUBAO_DEVICE_ID = device_id_from_env
+        if fp_from_env:
+            self.DOUBAO_FP = fp_from_env
+        if tea_uuid_from_env:
+            self.DOUBAO_TEA_UUID = tea_uuid_from_env
+        if web_id_from_env:
+            self.DOUBAO_WEB_ID = web_id_from_env
+
+        # --- 验证设备指纹是否已配置 ---
         if not all([self.DOUBAO_DEVICE_ID, self.DOUBAO_FP, self.DOUBAO_TEA_UUID, self.DOUBAO_WEB_ID]):
-            raise ValueError("必须在 .env 文件中配置完整的设备指纹参数 (DOUBAO_DEVICE_ID, DOUBAO_FP, DOUBAO_TEA_UUID, DOUBAO_WEB_ID)")
+            raise ValueError("必须配置完整的设备指纹参数 (DOUBAO_DEVICE_ID, DOUBAO_FP, DOUBAO_TEA_UUID, DOUBAO_WEB_ID)")
         
         return self
 
